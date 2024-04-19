@@ -7,7 +7,7 @@ export const Home = () => {
 	const { store, actions } = useContext(Context)
 
 	useEffect(() => {
-	//	actions.getContacts()
+	//actions.getContacts()
 	}, []);
 
 

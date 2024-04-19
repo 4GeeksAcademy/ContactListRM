@@ -4,13 +4,12 @@ import ScrollToTop from "./component/scrollToTop";
 
 import { Home } from "./views/home";
 import { Contact } from "./views/contact";
-import { AddContact } from "./views/addContact";
+import {AddContact} from "./views/addContact"
 import injectContext from "./store/appContext";
 
-import { Navbar } from "./component/navbar";
-import { Footer } from "./component/footer";
 
-//create your first component
+
+
 const Layout = () => {
 	//the basename is used when your project is published in a subdirectory and not in the root of the domain
 	// you can set the basename on the .env file located at the root of this project, E.g: BASENAME=/react-hello-webapp/
@@ -20,14 +19,12 @@ const Layout = () => {
 		<div>
 			<BrowserRouter basename={basename}>
 				<ScrollToTop>
-					<Navbar />
 					<Routes>
 						<Route path="/" element={<Home />} />
-						<Route path="/contact" element={<Contact />} />
-						<Route path="/new/:id" element={<AddContact />} />
+						<Route path="/demo" element={<Contact/>} />
+						<Route path="/update/:id" element={<AddContact/>} />
 						<Route path="*" element={<h1>Not found!</h1>} />
 					</Routes>
-					<Footer />
 				</ScrollToTop>
 			</BrowserRouter>
 		</div>
