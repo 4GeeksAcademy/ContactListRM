@@ -1,52 +1,88 @@
 import React, { useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router";
+
 import { Context } from "../store/appContext";
-import { Link } from "react-router-dom"
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
+import { faPhone } from "@fortawesome/free-solid-svg-icons";
+import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
+import { faPencil } from "@fortawesome/free-solid-svg-icons";
+import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
+
 import "../../styles/contact.css";
+import Boo from "../../img/Boo.jpg";
 
 
 export const Contact = () => {
-  const { actions } = useContext(Context)
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+    const { store, actions } = useContext(Context);
+    const navigate = useNavigate()
 
-    const inputData = Object.fromEntries(new FormData(event.target));
-    console.log(Object.fromEntries(new FormData(event.target)))
-    actions.createContact(inputData);
-    console.log(inputData)
-  };
+    useEffect(() => {
+        actions.getAllContacts()
+      }, []);
 
-  return (
-    <>
-      <div className="container">
-        <form onSubmit={handleSubmit}>
-          <div className="mb-3">
-            <h1 className="text-center">Add a New Contact</h1>
-            <label for="exampleInputEmail1" className="form-label">Full name</label>
-            <input name= "full_name" type="name" className="form-control" placeholder="Full name" id="exampleInputName" aria-describedby="NamelHelp" />
-          </div>
-          <div className="mb-3">
-            <label for="exampleInputEmail" className="form-label">Email</label>
-            <input name="email" type="email" className="form-control" placeholder="Email" id="exampleInputEmail" />
-          </div>
-          <div className="mb-3">
-            <label for="exampleInputPhone" className="form-label">Phone</label>
-            <input name="phone" type="phone" className="form-control" placeholder="Phone" id="exampleInputPhone" />
-          </div>
-          <div className="mb-3">
-            <label for="address" className="form-label">Address</label>
-            <input name="address" type="address" className="form-control" placeholder="Address" id="exampleInputAddress" />
-          </div>
-          <div className="form-group form-button">
-            <input type="submit" className="form-submit" value="Save" />
-          </div>
-            <Link to="/">
-              <a href="#" className="text-decoration-none">or get back to contacts</a>
-            </Link>
-        </form>
-      </div>
-    </>
-  )
+     {
+        return(
+            store.contacts.map(contact => (
+                <div className="col-12 contactCard">
+                    <div className="row">
+                        <div className="col-3 d-flex justify-content-center py-3">
+                            <img src={Boo} className="img-fluid contactImage"></img>
+                        </div>
+                        <div className="col-7">
+                            <h2 className="mb-4">{contact?.full_name}</h2>
+                            <div className="d-flex">
+                                <div className="contactCardInfoIcons">
+                                    <FontAwesomeIcon icon={faLocationDot} />
+                                </div>
+                                <p>{contact?.address}</p>
+                            </div>
+                            <div className="d-flex">
+                                <div className="contactCardInfoIcons">
+                                    <FontAwesomeIcon icon={faPhone} />
+                                </div>
+                                <p>{contact?.phone}</p>
+                            </div>
+                            <div className="d-flex">
+                                <div className="contactCardInfoIcons">
+                                    <FontAwesomeIcon icon={faEnvelope} />
+                                </div>
+                                <p>{contact?.email}</p>
+                            </div>
+                        </div>
+                        <div className="col-2 d-flex justify-content-center">
+                            <div className="contactModifyIcons">
+                                <button className="invisibleButton" onClick={async () => {
+                                    await actions.updateContact(contact?.id);
+                                    navigate("/demo");
+                                }}>
+                                    <FontAwesomeIcon icon={faPencil} />
+                                </button>
+                            </div>
+                            <div className="contactModifyIcons">
+                                <button className="invisibleButton" onClick={() => {
+                                    actions.deleteContact(contact?.id);
+                                    window.location.reload();
+                                }}>
+                                    <FontAwesomeIcon icon={faTrashCan} />
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            ))
+        )
+    }
 
-
-};
+    return(
+        <div className="container-fluid">
+            <div className="row mx-5">
+                <div className="col-12 d-flex justify-content-end py-3">
+                    <button className="addContactButton" onClick={() => {navigate("/demo")}}>Add new contact</button>
+                </div>
+            </div>
+        </div>
+    )
+}
