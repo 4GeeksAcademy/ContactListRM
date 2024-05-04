@@ -17,13 +17,13 @@ import Boo from "../../img/Boo.jpg";
 export const Contact = () => {
 
     const { store, actions } = useContext(Context);
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     useEffect(() => {
-        actions.getAllContacts()
-      }, []);
+        actions.getAllContacts();
+    }, []);
 
-     {
+    function ContactCards () {
         return(
             store.contacts.map(contact => (
                 <div className="col-12 contactCard">
@@ -55,8 +55,8 @@ export const Contact = () => {
                         <div className="col-2 d-flex justify-content-center">
                             <div className="contactModifyIcons">
                                 <button className="invisibleButton" onClick={async () => {
-                                    await actions.updateContact(contact?.id);
-                                    navigate("/demo");
+                                    await actions.setUpdateId(contact?.id);
+                                    navigate("/update-contact");
                                 }}>
                                     <FontAwesomeIcon icon={faPencil} />
                                 </button>
@@ -82,6 +82,7 @@ export const Contact = () => {
                 <div className="col-12 d-flex justify-content-end py-3">
                     <button className="addContactButton" onClick={() => {navigate("/demo")}}>Add new contact</button>
                 </div>
+                <ContactCards/>
             </div>
         </div>
     )
