@@ -55,7 +55,7 @@ export const Contact = () => {
                         <div className="col-2 d-flex justify-content-center">
                             <div className="contactModifyIcons">
                                 <button className="invisibleButton" onClick={async () => {
-                                    await actions.setUpdateId(contact?.id);
+                                    await actions.updateContact(contact?.id);
                                     navigate("/update-contact");
                                 }}>
                                     <FontAwesomeIcon icon={faPencil} />
