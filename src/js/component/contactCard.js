@@ -3,7 +3,7 @@ import "../../styles/contactCard.css";
 import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
 
-export const ContactCard = ({ contact }) => {
+export const ContactCard = ({ id, full_name, address, phone, email }) => {
     const { actions } = useContext(Context);
 
     const handleDel = async () => {
@@ -13,9 +13,7 @@ export const ContactCard = ({ contact }) => {
         // window.location.reload();
     };
 
-    const { id, full_name, address, phone, email } = contact;
-
-    return (
+        return (
         <div className="row border border-1 border-secondary mt-2 mx-auto w-75 col-12">
             <div className="col-xs-12 col-sm-12 col-md-5 col-lg-3 col-xl-3">
                 <img className=" w-100  img" src="https://st4.depositphotos.com/8230070/22279/v/450/depositphotos_222797394-stock-illustration-face-expression-beautiful-woman-dark.jpg" alt="Contact" />
@@ -43,4 +41,3 @@ export const ContactCard = ({ contact }) => {
         </div>
     );
 };
-

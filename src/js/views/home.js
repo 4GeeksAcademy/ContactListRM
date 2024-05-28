@@ -1,5 +1,4 @@
 import React, { useContext, useEffect } from "react";
-import { contactCard } from "../component/contactCard";
 import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
 
@@ -8,9 +7,8 @@ export const Home = () => {
 
 	useEffect(() => {
 	//actions.getContacts()
+    actions.getContacts()
 	}, []);
-
-
 
 	return (
 		<>
