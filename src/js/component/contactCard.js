@@ -41,3 +41,4 @@ export const ContactCard = ({ id, full_name, address, phone, email }) => {
         </div>
     );
 };
+

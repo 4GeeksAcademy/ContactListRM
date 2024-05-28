@@ -30,6 +30,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     console.log(error);
                 }
             },
+
             createContact: async (contactData) => {
                 const store = getStore();
                 try {
