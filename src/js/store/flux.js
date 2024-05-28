@@ -17,23 +17,6 @@ const getState = ({ getStore, getActions, setStore }) => {
             contacts: []
         },
         actions: {
-            getAllContacts: async () => {
-                const store = getStore();
-                try {
-                    let response = await fetch(`${store.urlBase}/agendas/Rosangel/contacts`);
-                    if (response.status === 404) {
-                        getActions().createAgenda();
-                    } else {
-                        let data = await response.json();
-                        console.log(data);
-                        setStore({
-                            contacts: data.contacts
-                        });
-                    }
-                } catch (error) {
-                    console.log(error);
-                }
-            },
             createAgenda: async () => {
                 const store = getStore();
                 try {
@@ -47,6 +30,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     console.log(error);
                 }
             },
+
             createContact: async (contactData) => {
                 const store = getStore();
                 try {
@@ -67,6 +51,26 @@ const getState = ({ getStore, getActions, setStore }) => {
                     console.error("Error creating contact:", error);
                 }
             },
+
+            getAllContacts: async () => {
+                const store = getStore();
+                try {
+                    let response = await fetch(`${store.urlBase}/agendas/Rosangel/contacts`);
+                    if (response.status === 404) {
+                        getActions().createAgenda();
+                    } else {
+                        let data = await response.json();
+                        console.log(data);
+                        setStore({
+                            contacts: [...data.contacts]
+                        });
+                    }
+                } catch (error) {
+                    console.log(error);
+                }
+            },
+
+
             deleteContact: async (contactId) => {
                 const store = getStore();
                 try {

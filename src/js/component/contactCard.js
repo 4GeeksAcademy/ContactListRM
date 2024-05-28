@@ -3,7 +3,7 @@ import "../../styles/contactCard.css";
 import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
 
-export const ContactCard = ({ contact }) => {
+export const ContactCard = ({ id, full_name, address, phone, email }) => {
     const { actions } = useContext(Context);
 
     const handleDel = async () => {
@@ -12,8 +12,6 @@ export const ContactCard = ({ contact }) => {
         // No es recomendable recargar la página aquí
         // window.location.reload();
     };
-
-    const { id, full_name, address, phone, email } = contact;
 
     return (
         <div className="row border border-1 border-secondary mt-2 mx-auto w-75 col-12">
@@ -43,4 +41,3 @@ export const ContactCard = ({ contact }) => {
         </div>
     );
 };
-
