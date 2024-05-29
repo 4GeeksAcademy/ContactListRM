@@ -1,0 +1,13 @@
+.newContactInput {
+    width: 100%;
+    margin: 10px 0px 20px 00px;
+}
+
+.saveButton {
+    width: 100%;
+    background-color: rgb(71, 123, 221);
+    border-radius: 5px;
+    border: none;
+    color: white;
+    padding: 5px 0px 5px 0px;
+}

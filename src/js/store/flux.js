@@ -17,20 +17,29 @@ const getState = ({ getStore, getActions, setStore }) => {
             contacts: []
         },
         actions: {
-            createAgenda: async () => {
+createAgenda: async () => {
                 const store = getStore();
                 try {
-                    let response = await fetch(`${store.urlBase}/agendas/Rosangel`);
-                    if (response.status === 400) {
-                        console.log("Agenda existe");
+                    const response = await fetch(`${store.urlBase}/agendas`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ name: "Rosangel" })
+                    });
+                    const responseData = await response.json();
+
+                    if (response.status === 201) {
+                        console.log("Agenda creada", responseData);
+                    } else if (response.status === 400) {
+                        console.log("La agenda ya existe o hay un error en la solicitud", responseData);
                     } else {
-                        console.log("Agenda creada");
+                        console.log("Error desconocido al crear la agenda", responseData);
                     }
                 } catch (error) {
-                    console.log(error);
+                    console.log("Error de red o del servidor: ", error);
                 }
             },
-
             createContact: async (contactData) => {
                 const store = getStore();
                 try {
@@ -85,6 +94,9 @@ const getState = ({ getStore, getActions, setStore }) => {
                     console.error("Error deleting contact:", error);
                 }
             },
+			setUpdateId: (newID) => {
+				setStore({updateContactID: newID})
+			},
             updateContact: async (contactId, contactData) => {
                 try {
                     const response = await fetch(`${store.urlBase}/agendas/Rosangel/contacts/${contactId}`, {
