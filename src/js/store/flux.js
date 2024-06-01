@@ -20,12 +20,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 createAgenda: async () => {
                 const store = getStore();
                 try {
-                    const response = await fetch(`${store.urlBase}/agendas`, {
+                    const response = await fetch(`${store.urlBase}/agendas/Rosangel`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
                         },
-                        body: JSON.stringify({ name: "Rosangel" })
                     });
                     const responseData = await response.json();
 
@@ -77,6 +76,7 @@ createAgenda: async () => {
                     console.log(error);
                 }
             },
+            
             deleteContact: async (contactId) => {
                 const store = getStore();
                 try {
@@ -97,24 +97,30 @@ createAgenda: async () => {
 			setUpdateId: (newID) => {
 				setStore({updateContactID: newID})
 			},
-            updateContact: async (contactId, contactData) => {
-                try {
-                    const response = await fetch(`${store.urlBase}/agendas/Rosangel/contacts/${contactId}`, {
-                        method: "PUT",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify(contactData),
-                    });
-                    if (response.ok) {
-                        getActions().getAllContacts();
-                    } else {
-                        console.error("Error updating contact:", response.status);
-                    }
-                } catch (error) {
-                    console.error("Error updating contact:", error);
-                }
-            },
+            updateContact: async (contactID, updatedContactInfo) => {
+				const actions = getActions()
+				const store = getStore()
+				try {
+					const response = await fetch(
+						`${store.urlBase}/agendas/Rosangel/contacts/${contactID}`,
+						{
+							method: "PUT",
+							headers: {
+								"Content-Type": "application/json",
+							},
+							body: JSON.stringify(updatedContactInfo),
+						}
+					);
+					if (response.ok) {
+						actions.getAllContacts();
+						return true
+					} else {
+						console.error("Error updating contact:", response.status);
+					}
+				} catch (error) {
+					console.error("Error updating contact:", error);
+				}
+			},
             changeColor: (index, color) => {
                 //get the store
                 const store = getStore();

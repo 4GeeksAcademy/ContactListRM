@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router";
-
 import { Context } from "../store/appContext";
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { faPhone } from "@fortawesome/free-solid-svg-icons";

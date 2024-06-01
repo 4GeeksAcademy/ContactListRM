@@ -20,6 +20,7 @@ export const ContactCard = () => {
     };
 
     return(
+        <>
         <div className="row p-5">
             <div className="col-12 d-flex justify-content-center">
                 <h1>Update contact</h1>
@@ -49,6 +50,7 @@ export const ContactCard = () => {
             </div>
             <a href="/">or get back to contacts</a>
         </div>
+        </>
     )
 }
 
