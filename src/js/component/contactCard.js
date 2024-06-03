@@ -1,56 +1,35 @@
-import React, {useContext} from "react";
-import { useState } from "react";
-import { Context } from "../store/appContext";
+import React from "react";
+import PropTypes from "prop-types";
+import Boo from "../../img/Boo.jpg";
 
-import "../../styles/contactCard.css" 
-import { useNavigate } from "react-router";
+export const ContactCard = ({ contact, onDelete, onUpdate }) => {
+    return (
+        <li className="list-group-item">
+            <div className="row w-100">
+                <div className="col-12 col-sm-6 col-md-3 px-0">
+                    <img src={Boo} alt={contact.name} className="rounded-circle mx-auto d-block img-fluid" />
+                </div>
+                <div className="col-12 col-sm-6 col-md-9 text-center text-sm-left">
+                    <button className="btn" onClick={onDelete}>
+                        <i className="fas fa-trash-alt" />
+                    </button>
+                    <button className="btn" onClick={onUpdate}>
+                        <i className="fas fa-edit ms-2"  />
+                    </button>
+                    <label className="name lead">{contact.name}</label>
+                    <br />
+                    <i className="fas fa-map-marker-alt text-muted mr-3" />
+                    <span className="text-muted">{contact.address}</span>
+                    <br />
+                    <span className="fa fa-phone fa-fw text-muted mr-3" />
+                    <span className="text-muted small">{contact.phone}</span>
+                    <br />
+                    <span className="fa fa-envelope fa-fw text-muted mr-3" />
+                    <span className="text-muted small text-truncate">{contact.email}</span>
+                </div>
+            </div>
+        </li>
+    );
+};
 
-export const ContactCard = () => {
-
-    const { store, actions } = useContext(Context);
-    const [newContactInfo, setNewContactInfo] = useState({"agenda_slug": "Rosangel"})
-    const navigate = useNavigate()
-
-    const handleChange = e => {
-        const { name, value } = e.target;
-        setNewContactInfo(prevState => ({
-            ...prevState,
-            [name]: value
-        }));
-    };
-
-    return(
-        <>
-        <div className="row p-5">
-            <div className="col-12 d-flex justify-content-center">
-                <h1>Update contact</h1>
-            </div>
-            <div className="col-12">
-                <label for="full_name">Full name</label><br></br>
-                <input type="text" className="newContactInput" placeholder="Full name" id="full_name" name="full_name" onChange={handleChange}></input>
-            </div>
-            <div className="col-12">
-                <label for="email">Email</label><br></br>
-                <input type="email" className="newContactInput" placeholder="Email" id="email" name="email" onChange={handleChange}></input>
-            </div>
-            <div className="col-12">
-                <label for="phone">Phone</label><br></br>
-                <input type="number" className="newContactInput" placeholder="Phone" id="phone" name="phone" onChange={handleChange}></input>
-            </div>
-            <div className="col-12">
-                <label for="address">Address</label><br></br>
-                <input type="text" className="newContactInput" placeholder="Address" id="address" name="address" onChange={handleChange}></input>
-            </div>
-            <div className="col-12">
-                <button className="saveButton" onClick={() => {
-                    actions.updateContact(store.updateContactID, newContactInfo);
-                    navigate("/");
-                    window.location.reload();
-                }}>Save</button>
-            </div>
-            <a href="/">or get back to contacts</a>
-        </div>
-        </>
-    )
-}
 

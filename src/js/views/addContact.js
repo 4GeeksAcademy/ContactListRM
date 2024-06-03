@@ -1,10 +1,11 @@
 import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext"
-import { Link } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 
 export const AddContact = () => {
     const { actions } = useContext(Context)
-
+    const params = useParams()
+    const navigate = useNavigate()
 
     const [contact, setContact] = useState({
         "name": "",
@@ -23,13 +24,22 @@ export const AddContact = () => {
 
     }
 
+    
+
     const saveContact = async (data) => {
-        let response = await actions.createContact(data)
+        let response
+        if(!params?.id){
+             response = await actions.createContact(data)
+        }else{
+             response = await actions.updateContact(params.id, data)
+        }
+        
         if (response) {
             alert("Usuario guardado exitosamente")
+            navigate("/")
         } else {
             alert("Error al guardar usuario")
-            
+
         }
     }
 
@@ -101,5 +111,6 @@ export const AddContact = () => {
         </div>
     );
 };
+
 
 export default AddContact;

@@ -17,7 +17,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             contacts: []
         },
         actions: {
-createAgenda: async () => {
+            createAgenda: async () => {
                 const store = getStore();
                 try {
                     const response = await fetch(`${store.urlBase}/agendas/Rosangel`, {
@@ -83,32 +83,33 @@ createAgenda: async () => {
                     const response = await fetch(`${store.urlBase}/agendas/Rosangel/contacts/${contactId}`, {
                         method: "DELETE",
                     });
-                    if (response.ok) {
-                        // Eliminar el contacto del estado local
-                        const updatedContacts = store.contacts.filter(contact => contact.id !== contactId);
-                        setStore({ contacts: updatedContacts });
-                    } else {
-                        console.error("Error deleting contact:", response.status);
+            
+                    if (!response.ok) {
+                        throw new Error(`Error deleting contact: ${response.status} ${response.statusText}`);
                     }
+            
+                    // Eliminar el contacto del estado local
+                    const updatedContacts = store.contacts.filter(contact => contact.id !== contactId);
+                    setStore({ contacts: updatedContacts });
+            
+                    console.log("Contact deleted successfully");
                 } catch (error) {
-                    console.error("Error deleting contact:", error);
+                    console.error("Network or server error:", error);
                 }
             },
-			setUpdateId: (newID) => {
-				setStore({updateContactID: newID})
-			},
-            updateContact: async (contactID, updatedContactInfo) => {
+            
+            updateContact: async (contactId, contactData) => {
 				const actions = getActions()
 				const store = getStore()
 				try {
 					const response = await fetch(
-						`${store.urlBase}/agendas/Rosangel/contacts/${contactID}`,
+						`${store.urlBase}/agendas/Rosangel/contacts/${contactId}`,
 						{
 							method: "PUT",
 							headers: {
 								"Content-Type": "application/json",
 							},
-							body: JSON.stringify(updatedContactInfo),
+							body: JSON.stringify(contactData),
 						}
 					);
 					if (response.ok) {
